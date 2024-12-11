@@ -7,6 +7,7 @@
         <methods>
           <include name="MySetup"/>
           <include name="ClickOnEvenNumbers"/>
+          <include name="BeforeEachTest"/>
         </methods>
       </class> <!-- MyTestCases -->
     </classes>

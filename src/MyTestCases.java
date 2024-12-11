@@ -2,12 +2,16 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.time.Duration;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -15,6 +19,16 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.MobileCapabilityType;
 
 public class MyTestCases {
+	
+	
+	@BeforeMethod
+	public void BeforeEachTest() throws MalformedURLException
+	{
+		String userName = "lujainalskran_yqo79J";
+		String accessKey = "xM22Sb2h9f86TagJS3Ua";
+		String browserStackURL = "https://"+ userName + ":" + accessKey + "@hub-cloud.browserstack.com/wd/hub";
+		driver = new AndroidDriver(new URL(browserStackURL), caps);
+	}
 
 	DesiredCapabilities caps = new DesiredCapabilities();
 	
@@ -23,21 +37,21 @@ public class MyTestCases {
 	AndroidDriver driver;
 	
 	
-	@BeforeTest
+	@BeforeTest // run first
 	public void MySetup()
 	{
-		caps.setCapability(MobileCapabilityType.PLATFORM_NAME , "Android");
-		caps.setCapability(MobileCapabilityType.DEVICE_NAME , "ABC");
-		File myApplication = new File("src/MyApps/calculator.apk");
-		caps.setCapability(MobileCapabilityType.APP ,myApplication.getAbsolutePath() );
+		caps.setCapability("platformName" , "Android");
+		caps.setCapability("deviceName" , "Google Pixel 7 Pro");
+		caps.setCapability("appiumVersion", "1.22.0");
+		caps.setCapability("App" ,"bs://ef21b7207de7af40ce5d5233acd2bafc3ef6efc9" );
 		
 		
 	}
 	@Test(priority = 1 , enabled = false)
 	public void ClickOnAllDigit() throws MalformedURLException 
 	{
-		driver = new AndroidDriver(new URL(AppiumURL), caps);
-		
+//		driver = new AndroidDriver(new URL(AppiumURL), caps);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofMinutes(1));
 //		driver.findElement(By.id("com.google.android.calculator:id/digit_9")).click();
 //		driver.findElement(By.id("com.google.android.calculator:id/op_add")).click();
 //		driver.findElement(By.id("com.google.android.calculator:id/digit_6")).click();
@@ -65,7 +79,7 @@ public class MyTestCases {
 	@Test(priority = 2 , enabled = true)
 	public void ClickOnEvenNumbers() throws MalformedURLException 
 	{
-		driver = new AndroidDriver(new URL(AppiumURL), caps);
+		//driver = new AndroidDriver(new URL(AppiumURL), caps);
 	
 		List<WebElement> buttons =  driver.findElements(By.className("android.widget.ImageButton"));
 		for (int i=0 ; i<buttons.size() ; i++)
